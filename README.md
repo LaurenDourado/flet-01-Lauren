@@ -1,3 +1,5 @@
+<img width="899" height="243" alt="image" src="https://github.com/user-attachments/assets/5c5bcd24-ae70-477b-83f2-5d2a5bacd10f" />
+
 # 🚀 Projetos Acadêmicos com Python & Flet
 
 Bem-vindo(a) ao repositório! 🎉  
