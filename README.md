@@ -67,7 +67,14 @@ Este código cria um aplicativo simples usando o Flet, uma ferramenta para const
 ---
 
 ### 👇 Botão Simples
-_Aqui vai o print do botão funcionando_
+Este código cria um aplicativo simples usando Flet, que permite criar interfaces visuais com Python. Na tela do app, há uma mensagem inicial pedindo para o usuário clicar em um botão e, logo abaixo, um botão azul com texto branco. Quando o usuário clica no botão, a mensagem muda para uma frase de parabéns e sua cor se torna verde, mostrando que a ação foi registrada. O código organiza os elementos de forma simples e centralizada, e garante que qualquer mudança na interface apareça imediatamente na tela, tornando o app interativo e fácil de usar.
+
+# - Print funções iniciais:
+<img width="749" height="944" alt="Captura de tela 2025-09-02 110304" src="https://github.com/user-attachments/assets/71aed63b-13f7-41e9-aa6f-d2f3becfadf7" />
+<img width="745" height="973" alt="Captura de tela 2025-09-02 110327" src="https://github.com/user-attachments/assets/226236eb-60cd-4094-b076-58aeae042a60" />
+
+# - Print com estilização e funções extras
+<img width="746" height="979" alt="Captura de tela 2025-09-02 110636" src="https://github.com/user-attachments/assets/2badc322-ca88-413b-bc7a-06a22ee84704" />
 
 ---
 
