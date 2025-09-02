@@ -117,7 +117,7 @@ O app é uma interface multi-página desenvolvida com Flet, organizada em quatro
 
 ---
 
-### 🐾 10a - Desafio - Loja virtual
+### 🛍️ 10a - Desafio - Loja virtual
 Esse código implementa uma Loja Virtual Mini em Python usando o Flet.
 A tela é dividida em três partes principais:
 - Produtos em grade (GridView): cada item aparece como um card colorido, com emoji, nome e preço, e ao clicar o produto é adicionado ao carrinho.
