@@ -56,9 +56,11 @@ Cada arquivo representa um exercício ou desafio diferente, ajudando a explorar 
 ### 📱 Primeiro App
 Este código cria um aplicativo simples usando o Flet, uma ferramenta para construir interfaces gráficas com Python. O app exibe um card central na tela, com um título colorido, algumas mensagens de boas-vindas e um botão. O título começa azul e, ao clicar no botão, alterna entre azul e vermelho, dando interatividade. O card é responsivo e se ajusta ao tamanho da tela, tornando o app adequado para celular ou desktop. O fundo da tela é neutro (cinza claro) e os elementos principais usam uma paleta de vermelho e azul, garantindo contraste e destaque visual. Tudo é organizado de forma centralizada, com espaçamento e bordas arredondadas para deixar o visual agradável e moderno.
 
-- Print funções iniciais:
+# - Print funções iniciais:
 <img width="1084" height="1006" alt="Captura de tela 2025-09-01 161924" src="https://github.com/user-attachments/assets/5d160c3a-ca2c-43f0-837b-f46964324382" />
-- Print com estilização e funções extras
+
+# - Print com estilização e funções extras
+
 <img width="414" height="729" alt="Captura de tela 2025-09-02 105215" src="https://github.com/user-attachments/assets/eafa645b-c7ee-4984-a35b-c4609d2b26ec" />
 <img width="415" height="738" alt="Captura de tela 2025-09-02 105241" src="https://github.com/user-attachments/assets/71fdc8cb-1a25-4808-9e13-9976b872f2b1" />
 
