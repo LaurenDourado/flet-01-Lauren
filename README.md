@@ -124,7 +124,7 @@ Este código cria um aplicativo de galeria interativa de animais usando Flet, on
 
 ---
 
-### 🐾 10 - Galeria de Cards
+### 🐾 10 - App
 Este código cria um aplicativo de galeria interativa de animais usando Flet, onde cada animal é representado por um card colorido com emoji, nome e descrição. A interface permite que o usuário filtre os animais por categoria, tamanho e também busque por nome em um campo de texto. Conforme os filtros ou a busca são alterados, os cards visíveis são atualizados dinamicamente, e um contador mostra quantos animais estão sendo exibidos. Há ainda um botão para limpar os filtros, retornando a visualização para todos os animais. O layout utiliza colunas, linhas e uma grade para organizar os cards, com sombras, bordas arredondadas e cores distintas para criar um visual moderno e amigável.
 
 
