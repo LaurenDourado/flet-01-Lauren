@@ -125,9 +125,16 @@ Este código cria um aplicativo de galeria interativa de animais usando Flet, on
 ---
 
 ### 🐾 10 - App
-Este código cria um aplicativo de galeria interativa de animais usando Flet, onde cada animal é representado por um card colorido com emoji, nome e descrição. A interface permite que o usuário filtre os animais por categoria, tamanho e também busque por nome em um campo de texto. Conforme os filtros ou a busca são alterados, os cards visíveis são atualizados dinamicamente, e um contador mostra quantos animais estão sendo exibidos. Há ainda um botão para limpar os filtros, retornando a visualização para todos os animais. O layout utiliza colunas, linhas e uma grade para organizar os cards, com sombras, bordas arredondadas e cores distintas para criar um visual moderno e amigável.
+O app é uma interface multi-página desenvolvida com Flet, organizada em quatro seções principais: Home, Perfil, Configurações e Sobre. A navegação é feita por uma barra inferior fixa, com ícones que destacam a página ativa, enquanto o conteúdo de cada página é gerenciado por um Stack, mostrando apenas a seção selecionada. A página Home exibe mensagens de boas-vindas, Perfil mostra informações do usuário e permite acumular pontos, Configurações oferece switches para personalizar preferências como modo escuro e notificações, e Sobre apresenta informações do app. Todo o layout é estruturado com Column e Container, utilizando cores consistentes, sombras, espaçamentos e animações suaves nos itens de navegação para criar uma experiência visual moderna e intuitiva.
 
+<img width="741" height="992" alt="Captura de tela 2025-09-02 115321" src="https://github.com/user-attachments/assets/fb8a30ff-9759-4a17-80dd-cf3d5b575978" />
 
+---
+
+### 🐾 10a - Desafio
+O app é uma interface multi-página desenvolvida com Flet, organizada em quatro seções principais: Home, Perfil, Configurações e Sobre. A navegação é feita por uma barra inferior fixa, com ícones que destacam a página ativa, enquanto o conteúdo de cada página é gerenciado por um Stack, mostrando apenas a seção selecionada. A página Home exibe mensagens de boas-vindas, Perfil mostra informações do usuário e permite acumular pontos, Configurações oferece switches para personalizar preferências como modo escuro e notificações, e Sobre apresenta informações do app. Todo o layout é estruturado com Column e Container, utilizando cores consistentes, sombras, espaçamentos e animações suaves nos itens de navegação para criar uma experiência visual moderna e intuitiva.
+
+<img width="741" height="992" alt="Captura de tela 2025-09-02 115321" src="https://github.com/user-attachments/assets/fb8a30ff-9759-4a17-80dd-cf3d5b575978" />
 
 ---
 
