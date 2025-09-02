@@ -2,40 +2,65 @@ import flet as ft
 
 def main(page: ft.Page):
     page.title = "Meu Primeiro Botão"
+    page.bgcolor = ft.Colors.GREY_100  # fundo neutro
     page.padding = 20
+    page.scroll = "adaptive"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    # Criando um texto que será modificado pelo botão
+    # Criando um texto estilizado
     mensagem = ft.Text(
         value="Clique no botão abaixo!👇",
-        size=20,
+        size=24,
+        weight=ft.FontWeight.BOLD,
+        color=ft.Colors.BLUE_700,
         text_align=ft.TextAlign.CENTER
     )
 
+    # Função que altera a mensagem ao clicar
     def botao_clicado(evento):
-        """
-        Esta função será executada sempre que o botão for clicado.
-        O parâmetro 'evento' contém informações sobre o clique.
-        """
-        # Mudando o texto da mensagem
         mensagem.value = "🎉 Parabéns! Você clicou no botão!"
-        mensagem.color = ft.Colors.GREEN
-
-        # IMPORATANTE: Sempre que modificamos elementos da interface,
-        # precisamos chamar page.update() para que as mudanças apareçam na tela
+        mensagem.color = ft.Colors.RED_700
         page.update()
 
-    # Criando nosso botão
+    # Botão estilizado
     meu_botao = ft.ElevatedButton(
-        text="Clique em mim!", # texto que aparece no botão
-        on_click=botao_clicado, # função que será executada no clique
-        width=200, # largura do botão
-        height=50, # altura do botão
-        bgcolor=ft.Colors.BLUE, # cor de fundo
-        color=ft.Colors.WHITE # cor do texto
+        text="Clique em mim!",
+        on_click=botao_clicado,
+        width=250,
+        height=60,
+        bgcolor=ft.Colors.RED_600,
+        color=ft.Colors.WHITE,
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=15)
+        )
     )
 
-    # Adicionando os elementos à página
-    page.add(mensagem)
-    page.add(meu_botao)
+    # Card centralizado para organizar os elementos
+    card = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                controls=[mensagem, meu_botao],
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=20,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER
+            ),
+            padding=30,
+            width=page.width * 0.85,
+            border_radius=15,
+            bgcolor=ft.Colors.WHITE,
+            shadow=ft.BoxShadow(blur_radius=12, spread_radius=1, color=ft.Colors.GREY_400)
+        ),
+        elevation=8
+    )
 
-ft.app(target=main)    
+    # Adicionando o card à página
+    page.add(
+        ft.Column(
+            controls=[card],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            expand=True
+        )
+    )
+
+ft.app(target=main)

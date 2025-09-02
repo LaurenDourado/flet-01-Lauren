@@ -2,70 +2,92 @@ import flet as ft
 
 def main(page: ft.Page):
     page.title = "Layouts Básicos"
+    page.bgcolor = ft.Colors.GREY_100  # fundo neutro
     page.padding = 20
-
-    # Vamos criar um layout organizado usando Column (vertical) e Row (horizontal)
+    page.scroll = "adaptive"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
     # Título principal
     titulo = ft.Text(
         "Organizando Elementos na Tela 📐",
         size=24,
         weight=ft.FontWeight.BOLD,
+        color=ft.Colors.BLUE_800,
         text_align=ft.TextAlign.CENTER
     )
 
-    # Criando uma linha horizontal com 3 botões
+    # Linha horizontal de botões (azul e vermelho)
     linha_botoes = ft.Row(
         controls=[
-            ft.ElevatedButton("Botão 1", bgcolor=ft.Colors.BLUE, color=ft.Colors.WHITE),
-            ft.ElevatedButton("Botão 2", bgcolor=ft.Colors.GREEN, color=ft.Colors.WHITE),
-            ft.ElevatedButton("Botão 3", bgcolor=ft.Colors.RED, color=ft.Colors.WHITE)
+            ft.ElevatedButton("Botão 1", bgcolor=ft.Colors.BLUE_700, color=ft.Colors.WHITE, width=100, height=50),
+            ft.ElevatedButton("Botão 2", bgcolor=ft.Colors.RED_700, color=ft.Colors.WHITE, width=100, height=50),
+            ft.ElevatedButton("Botão 3", bgcolor=ft.Colors.BLUE_700, color=ft.Colors.WHITE, width=100, height=50)
         ],
-        alignment=ft.MainAxisAlignment.CENTER,  # Centralizar os botões
-        spacing=20  # Espaço entre os botões
+        alignment=ft.MainAxisAlignment.CENTER,
+        spacing=15
     )
 
-    # Criando algumas caixas coloridas em coluna
+    # Caixas coloridas em coluna (azul e vermelho)
     caixa1 = ft.Container(
-        content=ft.Text("Caixa 1", color=ft.Colors.WHITE),
-        bgcolor=ft.Colors.PURPLE,
+        content=ft.Text("Caixa 1", color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD),
+        bgcolor=ft.Colors.BLUE_700,
         width=200,
-        height=50,
+        height=60,
         alignment=ft.alignment.center,
-        border_radius=5
+        border_radius=10,
+        shadow=ft.BoxShadow(blur_radius=8, spread_radius=1, color=ft.Colors.GREY_400)
     )
 
     caixa2 = ft.Container(
-        content=ft.Text("Caixa 2", color=ft.Colors.WHITE),
-        bgcolor=ft.Colors.ORANGE,
+        content=ft.Text("Caixa 2", color=ft.Colors.WHITE, weight=ft.FontWeight.BOLD),
+        bgcolor=ft.Colors.RED_700,
         width=200,
-        height=50,
+        height=60,
         alignment=ft.alignment.center,
-        border_radius=5
+        border_radius=10,
+        shadow=ft.BoxShadow(blur_radius=8, spread_radius=1, color=ft.Colors.GREY_400)
     )
 
-    # Organizando as caixas em uma coluna
+    # Coluna de caixas
     coluna_caixas = ft.Column(
         controls=[caixa1, caixa2],
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,  # Centralizar horizontalmente
-        spacing=15  # Espaço entre as caixas
-    )
-
-    # Layout principal: organizando tudo verticalmente
-    layout_principal = ft.Column(
-        controls=[
-            titulo,
-            ft.Text("Linha horizontal de botões:", size=16),
-            linha_botoes,
-            ft.Text("Coluna de caixas:", size=16),
-            coluna_caixas,
-            ft.Text("Layout organizado! 🎉", size=14, color=ft.Colors.GREEN)
-        ],
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        spacing=25  # Espaço entre cada seção
+        spacing=15
     )
 
-    # Adicionando tudo à página
-    page.add(layout_principal)
+    # Card principal para organizar todo o layout
+    card = ft.Card(
+        content=ft.Container(
+            content=ft.Column(
+                controls=[
+                    titulo,
+                    ft.Text("Linha horizontal de botões:", size=16, color=ft.Colors.BLUE_900),
+                    linha_botoes,
+                    ft.Text("Coluna de caixas:", size=16, color=ft.Colors.RED_900),
+                    coluna_caixas,
+                    ft.Text("Layout organizado! 🎉", size=14, color=ft.Colors.GREEN_700)
+                ],
+                spacing=20,
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER
+            ),
+            padding=30,
+            width=page.width * 0.85,
+            border_radius=15,
+            bgcolor=ft.Colors.WHITE,
+            shadow=ft.BoxShadow(blur_radius=12, spread_radius=1, color=ft.Colors.GREY_400)
+        ),
+        elevation=8
+    )
+
+    # Adicionando o card à página
+    page.add(
+        ft.Column(
+            controls=[card],
+            alignment=ft.MainAxisAlignment.CENTER,
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            expand=True
+        )
+    )
 
 ft.app(target=main)

@@ -1,147 +1,123 @@
 import flet as ft
 
 def main(page: ft.Page):
-    page.title = "Calculadora Completa"
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-    page.padding = 20
-    page.bgcolor = ft.Colors.BLACK
+    # Configurações iniciais
+    page.title = "🛍️ Loja Virtual Mini"
+    page.bgcolor = ft.Colors.GREY_100
+    page.scroll = ft.ScrollMode.ADAPTIVE
+    page.padding = 25
 
-    # Display da calculadora
-    display = ft.Text(
-        value="0",
-        size=40,
-        weight=ft.FontWeight.BOLD,
-        color=ft.Colors.WHITE,
-        text_align=ft.TextAlign.RIGHT,
-        expand=True
-    )
+    carrinho, total_carrinho = [], 0.0
 
-    historico = ft.Text(
-        value="",
-        size=20,
-        color=ft.Colors.GREY_400,
-        text_align=ft.TextAlign.RIGHT,
-        expand=True
-    )
+    # Área de produtos
+    area_produtos = ft.GridView(expand=1, runs_count=2, max_extent=200,
+                                spacing=15, run_spacing=15, child_aspect_ratio=0.9)
 
-    valor_atual = "0"
-    valor_anterior = ""
-    operador = ""
+    # Elementos do carrinho
+    contador_carrinho = ft.Text("Carrinho (0)", size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_800)
+    total_texto = ft.Text("Total: R$ 0,00", size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.RED_700)
+    lista_carrinho = ft.ListView(height=180, spacing=8)
+    notificacao = ft.Text("", size=14, text_align=ft.TextAlign.CENTER, color=ft.Colors.BLUE_700)
 
-    def atualizar_display():
-        display.value = valor_atual
-        historico.value = f"{valor_anterior} {operador}"
+    def mostrar_notificacao(msg, cor=ft.Colors.BLUE_700):
+        notificacao.value, notificacao.color = msg, cor
         page.update()
 
-    def limpar(e):
-        nonlocal valor_atual, valor_anterior, operador
-        valor_atual = "0"
-        valor_anterior = ""
-        operador = ""
-        atualizar_display()
+    def atualizar_carrinho():
+        nonlocal total_carrinho
+        contador_carrinho.value = f"Carrinho ({len(carrinho)})"
+        total_texto.value = f"Total: R$ {total_carrinho:.2f}"
+        lista_carrinho.controls.clear()
 
-    def adicionar_numero(e):
-        nonlocal valor_atual
-        numero = e.control.text
-        if valor_atual == "0":
-            valor_atual = numero
+        for i, item in enumerate(carrinho):
+            lista_carrinho.controls.append(
+                ft.Row([
+                    ft.Text(item["nome"], expand=True, size=14),
+                    ft.Text(f"R$ {item['preco']:.2f}", color=ft.Colors.GREEN_600, size=14),
+                    ft.IconButton(ft.icons.DELETE, icon_color=ft.Colors.RED, tooltip="Remover",
+                                  on_click=lambda e, idx=i: remover_do_carrinho(idx))
+                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
+            )
+        page.update()
+
+    def adicionar_ao_carrinho(nome, preco):
+        nonlocal total_carrinho
+        carrinho.append({"nome": nome, "preco": preco})
+        total_carrinho += preco
+        atualizar_carrinho()
+        mostrar_notificacao(f"✅ {nome} adicionado ao carrinho!", ft.Colors.GREEN_700)
+
+    def remover_do_carrinho(idx):
+        nonlocal total_carrinho
+        if 0 <= idx < len(carrinho):
+            produto = carrinho.pop(idx)
+            total_carrinho -= produto["preco"]
+            atualizar_carrinho()
+            mostrar_notificacao(f"❌ {produto['nome']} removido!", ft.Colors.RED_700)
+
+    def finalizar_compra(e):
+        nonlocal total_carrinho
+        if carrinho:
+            carrinho.clear()
+            total_carrinho = 0.0
+            atualizar_carrinho()
+            mostrar_notificacao("🎉 Compra finalizada com sucesso!", ft.Colors.BLUE_800)
         else:
-            valor_atual += numero
-        atualizar_display()
+            mostrar_notificacao("⚠️ Carrinho vazio!", ft.Colors.ORANGE)
 
-    def adicionar_ponto(e):
-        nonlocal valor_atual
-        if "." not in valor_atual:
-            valor_atual += "."
-        atualizar_display()
-
-    def selecionar_operador(e):
-        nonlocal valor_atual, valor_anterior, operador
-        if valor_atual != "":
-            valor_anterior = valor_atual
-            operador = e.control.text
-            valor_atual = "0"
-        atualizar_display()
-
-    def calcular(e):
-        nonlocal valor_atual, valor_anterior, operador
-        try:
-            if operador == "+":
-                resultado = float(valor_anterior) + float(valor_atual)
-            elif operador == "-":
-                resultado = float(valor_anterior) - float(valor_atual)
-            elif operador == "×":
-                resultado = float(valor_anterior) * float(valor_atual)
-            elif operador == "÷":
-                if float(valor_atual) != 0:
-                    resultado = float(valor_anterior) / float(valor_atual)
-                else:
-                    resultado = "Erro"
-            else:
-                resultado = valor_atual
-
-            valor_atual = str(resultado)
-            valor_anterior = ""
-            operador = ""
-            atualizar_display()
-        except:
-            valor_atual = "Erro"
-            atualizar_display()
-
-    def apagar(e):
-        nonlocal valor_atual
-        valor_atual = valor_atual[:-1] if len(valor_atual) > 1 else "0"
-        atualizar_display()
-
-    # Função para criar botões
-    def criar_botao(texto, cor=ft.Colors.BLUE_GREY_800, expand=1, func=None):
-        return ft.ElevatedButton(
-            texto,
-            on_click=func,
+    def criar_card(nome, preco, emoji, cor):
+        return ft.Container(
+            content=ft.Column([
+                ft.Text(emoji, size=40, text_align=ft.TextAlign.CENTER),
+                ft.Text(nome, size=16, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE, text_align=ft.TextAlign.CENTER),
+                ft.Text(f"R$ {preco:.2f}", size=14, color=ft.Colors.WHITE70, text_align=ft.TextAlign.CENTER)
+            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=10),
             bgcolor=cor,
-            color=ft.Colors.WHITE,
-            width=70,
-            height=70,
-            style=ft.ButtonStyle(
-                shape=ft.RoundedRectangleBorder(radius=10)
-            ),
-            expand=expand
+            padding=15,
+            border_radius=15,
+            shadow=ft.BoxShadow(blur_radius=10, spread_radius=1, color=ft.Colors.with_opacity(0.3, ft.Colors.BLACK)),
+            on_click=lambda e: adicionar_ao_carrinho(nome, preco),
+            ink=True,
+            animate=ft.Animation(300, ft.AnimationCurve.EASE_OUT),
+            width=180,
+            height=190
         )
 
-    # Layout dos botões
-    botoes = [
-        [("C", ft.Colors.RED_400, limpar), ("⌫", ft.Colors.BLUE_GREY_600, apagar), ("%", ft.Colors.BLUE_GREY_600, selecionar_operador), ("÷", ft.Colors.ORANGE, selecionar_operador)],
-        [("7", ft.Colors.BLUE_GREY_800, adicionar_numero), ("8", ft.Colors.BLUE_GREY_800, adicionar_numero), ("9", ft.Colors.BLUE_GREY_800, adicionar_numero), ("×", ft.Colors.ORANGE, selecionar_operador)],
-        [("4", ft.Colors.BLUE_GREY_800, adicionar_numero), ("5", ft.Colors.BLUE_GREY_800, adicionar_numero), ("6", ft.Colors.BLUE_GREY_800, adicionar_numero), ("-", ft.Colors.ORANGE, selecionar_operador)],
-        [("1", ft.Colors.BLUE_GREY_800, adicionar_numero), ("2", ft.Colors.BLUE_GREY_800, adicionar_numero), ("3", ft.Colors.BLUE_GREY_800, adicionar_numero), ("+", ft.Colors.ORANGE, selecionar_operador)],
-        [("0", ft.Colors.BLUE_GREY_800, adicionar_numero), (".", ft.Colors.BLUE_GREY_800, adicionar_ponto), ("=", ft.Colors.GREEN_400, calcular)]
+    produtos = [
+        {"nome": "Smartphone", "preco": 899.99, "emoji": "📱", "cor": ft.Colors.BLUE_600},
+        {"nome": "Notebook", "preco": 2499.90, "emoji": "💻", "cor": ft.Colors.RED_600},
+        {"nome": "Tênis", "preco": 299.99, "emoji": "👟", "cor": ft.Colors.BLUE_700},
+        {"nome": "Camiseta", "preco": 89.90, "emoji": "👕", "cor": ft.Colors.RED_700},
+        {"nome": "Livro", "preco": 45.00, "emoji": "📚", "cor": ft.Colors.BLUE_500},
+        {"nome": "Fone", "preco": 199.99, "emoji": "🎧", "cor": ft.Colors.RED_500},
     ]
 
-    # Adiciona display e botões na tela
+    for p in produtos:
+        area_produtos.controls.append(criar_card(p["nome"], p["preco"], p["emoji"], p["cor"]))
+
+    # Layout da página
     page.add(
-        ft.Column(
-            [
-                historico,
-                display,
-                ft.Divider(height=1, color=ft.Colors.GREY),
-                *[
-                    ft.Row(
-                        [criar_botao(txt, cor, func=func) for txt, cor, func in linha],
-                        alignment=ft.MainAxisAlignment.SPACE_EVENLY,
-                        spacing=10
-                    )
-                    for linha in botoes
-                ]
-            ],
-            spacing=10,
-            expand=True
-        )
+        ft.Column([
+            ft.Text("🛍️ Loja Virtual Mini", size=30, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_800),
+            ft.Text("Escolha seus produtos favoritos!", size=16, color=ft.Colors.GREY_700),
+            ft.Container(content=area_produtos, padding=10, border_radius=12, bgcolor=ft.Colors.WHITE),
+            ft.Divider(height=20, color=ft.Colors.GREY_300),
+            ft.Container(
+                content=ft.Column([
+                    ft.Row([contador_carrinho, total_texto], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                    lista_carrinho,
+                    ft.Row([
+                        ft.ElevatedButton("🛒 Finalizar Compra", on_click=finalizar_compra,
+                                          bgcolor=ft.Colors.RED_600, color=ft.Colors.WHITE, width=220)
+                    ], alignment=ft.MainAxisAlignment.CENTER),
+                    notificacao
+                ], spacing=15),
+                padding=20,
+                border_radius=12,
+                bgcolor=ft.Colors.WHITE,
+                shadow=ft.BoxShadow(blur_radius=8, spread_radius=1, color=ft.Colors.with_opacity(0.15, ft.Colors.BLACK))
+            )
+        ], spacing=20, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
     )
 
-    atualizar_display()
-
 ft.app(target=main)
-
-
-    
